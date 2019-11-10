@@ -1,0 +1,13 @@
+.pokeimage {
+    display: block;
+}
+
+.searchInput {
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    height: 30px;
+    font-size: 28px;
+    text-align: center;
+    text-transform: capitalize;
+}
