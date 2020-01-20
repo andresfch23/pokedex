@@ -7,12 +7,11 @@ let pokemon,
     infoHeight = document.getElementById('infoHeight'),
     infoWeight = document.getElementById('infoWeight'),
     infoType = document.getElementById('infoType'),
-    listPokemon = document.getElementById('listPokemon'),
-    typePokedex = ['national', 'kanto', 'original-johto'],
     BACK_DEFAULT = 'back_default',
     FRONT_DEFAULT = 'front_default',
     currentImage = FRONT_DEFAULT,
-    newpokemon = '<img id="leftArrow" class="arrow arrow--left" src="../assets/redArrow.png"></img><img id="pokeImage" class="pokeImage"></img><img id="rightArrow" class="arrow arrow--right" src="../assets/redArrow.png"></img>';
+    newpokemon = '<img id="leftArrow" class="arrow arrow--left" src="../assets/redArrow.png"></img><img id="pokeImage" class="pokeImage"></img><img id="rightArrow" class="arrow arrow--right" src="../assets/redArrow.png"></img>',
+    typePokedex = ['national', 'kanto', 'original-johto'];
 
 const changeImage = (images, type, elem) => {
     if(type === FRONT_DEFAULT) {
@@ -65,14 +64,23 @@ const getImages = sprites => {
 
 const addInfo = info => {
     let { height, name, weight, types } = info,
-        type = types[0].type.name;
+        nameType = '';
+        
+        types.forEach(each => {
+            const type = each.type,
+                  name = type.name;
 
-        console.log(weight)
+            if(name) {
+                nameType += `${name}, `;
+            }
+        });
+
+        nameType = nameType.slice(0, -2);
         
     infoHeight.innerText = height;
     infoName.innerText = name;
     infoWeight.innerText = weight;
-    infoType.innerText = type;
+    infoType.innerText = nameType;
 
     infoContainer.style.display = 'block';
 }
@@ -100,48 +108,69 @@ const fetchInfoNew = () => {
 
 pokeSearch.addEventListener('click', fetchInfoNew);
 
-const fetchList = () => {
-    fetch(`https://pokeapi.co/api/v2/pokedex`)
-    .then(response => {
-        return response.json();
-    })
-    .then(infoList => {
-       const results = infoList.results;
+const fetchInfoPok = () => {
+    const param = window.location.search,
+          urlParams = new URLSearchParams(param);
+          pok = urlParams.get('pok'),
+          url = 'https://pokeapi.co/api/v2/pokedex/';
 
-       results.forEach(each => {
-            typePokedex.forEach(pok => {
-                if (pok === each.name) {
-                    const el = document.createElement('li'),
-                          node = document.createTextNode(each.name);
-                    
-                          el.appendChild(node);
-                          el.addEventListener("click", () => {
-                            fetch(each.url)
-                            .then(res => {
-                                return res.json();
-                            })
-                            .then(res => {
-                                console.log(res);
-                            })
-                            .catch(error => {
-                                console.log(error);
-                            })
-                          });
-        
-                    listPokemon.appendChild(el);
-                }
+        if(pok === typePokedex[0]) {
+            url += '1';
+        } else if(pok === typePokedex[1]) {
+            url += '2';
+        } else {
+            url += '3'
+        }
+    
+    fetch(url)
+    .then(res => {
+        return res.json();
+    })
+    .then(res => {
+        let pokemons,
+            entries = res.pokemon_entries;
+
+            pokemons = entries.map(each => {
+                const pokemon = each.pokemon_species.name;
+
+                return pokemon;
             });
-       });
+            
+            pokeInput.addEventListener("keyup", () => {
+
+                listPokemon.innerHTML = '';
+                pokemons.forEach(each => {
+                    const input = document.getElementById("pokeInput"),
+                          inputVal = input.value;
+
+                    if(each.toLowerCase().indexOf(inputVal) > -1 && inputVal !== '') {
+                        const el = document.createElement('li'),
+                            node = document.createTextNode(each);
+                    
+                        el.appendChild(node);
+                        el.addEventListener("click", e => {
+                            const srcElement = e.srcElement,
+                                  innerText = srcElement.innerText;
+                            
+                            input.value = innerText;
+                            listPokemon.innerHTML = '';
+                        });
+                        listPokemon.appendChild(el);
+                    }
+                });
+            })
     })
     .catch(error => {
         console.log(error);
-    })
-}
+    });      
+};
 
-fetchList();
+fetchInfoPok();
+
 
 // NEXT STEPS 
 
 /* 1) INFO OF THE pokemon
 2) CHART 
-3) LIST OF POKEMONS WITH PAGINATION */
+3) LIST OF POKEMONS WITH PAGINATION
+4) spinner  */
