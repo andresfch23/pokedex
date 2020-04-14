@@ -1,0 +1,233 @@
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: pokemon;
+    letter-spacing: 3px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@font-face {
+    font-family: "pokemon";
+    src: url("../assets/fonts/pokemon_solid.ttf");
+}
+
+@keyframes changeColor {
+    0% { color: white }
+    100% { color: red }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(720deg); }
+}
+
+.search {
+    &__input {
+        display: block;
+        margin: 0 auto;
+        width: 30%;
+        height: 40px;
+        font-size: 24px;
+        text-align: center;
+        text-transform: capitalize;
+        background-color: black;
+        color: white;
+        font-family: pokemon;
+        letter-spacing: 4px;
+        border-radius: 25px;
+        &:focus {
+            outline: none;
+        }
+    }
+    &__type {
+        display: block;
+        margin: 40px auto 22px;
+        background: red;
+        border: 1px solid black;
+        border-radius: 50%;
+        width: 68px;
+        height: 68px;
+        color: white;
+        cursor: not-allowed;
+        &--allowed {
+            cursor: pointer;
+        }
+    }
+    &__list {
+        text-align: center;
+        list-style-type: none;
+        position: absolute;
+        top: 173px;
+        right: 50%;
+        transform: translateX(50%);
+        width: 29%;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        max-height: 160px;
+        overflow-y: scroll;
+        & li {
+            padding: 10px;
+            border: 1px solid black;
+            color: black;
+            text-transform: capitalize;
+            cursor: pointer;
+        }
+    }
+}
+
+.pokeImage {
+    display: inline-block;
+    width: 200px;
+    margin: auto;
+    animation: spin 1s cubic-bezier(.17,.67,.83,.67);
+    transition: all 1s;
+    &--ball {
+        width: 100px;
+    }
+}
+
+.pokeImage:hover {
+    width: 300px;
+}
+
+.arrow {
+    width: 50px;
+    height: 70px;
+    margin: auto;
+    display: inline-block;
+    cursor: pointer;
+    &--left {
+        transform: rotateZ(180deg);
+        grid-column-start: 2;
+    }
+    &--right {
+        grid-column-start: 4;
+    }
+}
+
+.info {
+    display: none;
+    max-width: 50%;
+    margin: auto;
+    border: 1px solid red;
+    
+    &__images {
+        display: grid;
+        grid-template-columns: 50px auto 300px auto 50px;
+        grid-template-rows: 300px;
+    }
+    &__description {
+        text-align: center;
+        
+        & h2 {
+            color: red;
+        }
+    }
+    &__item {
+        text-transform: capitalize;
+        color: white;
+    }
+}
+
+.list {
+    text-align: center;
+    &__title {
+        font-size: 25px;
+        font-family: pokemon;
+        color: red;
+        letter-spacing: 5px;
+        animation-name: changeColor;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+    
+    &__options {
+        list-style: none;
+        margin: 100px auto 0;
+        padding: 0;
+    }
+
+    &__item {
+        border: 1px solid #ac0404e1;
+        height: 100px;
+        width: 25%;
+        position: relative;
+        border-radius: 75px;
+        margin: 40px auto;
+        transition: all 0.5s;
+        background-color: red;
+
+        &:hover {
+            width: 30%;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            border: 1px solid white;
+            color: black;
+        }
+
+        & span {
+            display: inline-flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: capitalize;
+        }
+    }
+}
+
+.head {
+    position: relative;
+    margin: 30px 0;
+    &__arrow {
+        position: absolute;
+        width: 70px;
+        height: 90px;
+        transform: rotate(180deg);
+        left: 40px;
+        top: -22px;
+        cursor: pointer;
+    }
+
+    &__title {
+        margin: 0 auto;
+        text-align: center;
+        text-transform: capitalize;
+        color: red;
+        letter-spacing: 5px;
+    }
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.header {
+    font-family: pokemon;
+
+    &__title {
+        color: red;
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        text-align: center;
+        margin-bottom: 80px;
+        font-size: 80px;
+        letter-spacing: 14px;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}

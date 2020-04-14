@@ -82,6 +82,7 @@ const fetchInfoNew = () => {
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokeInput}`)
     .then(response => {
+        console.log(response);
         return response.json();
     })
     .then(infoPokemon => {

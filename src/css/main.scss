@@ -65,19 +65,25 @@
     }
 }
 
-.images {
-    display: grid;
-    grid-template-columns: auto 50px 300px 50px auto;
-    grid-template-rows: 300px;
-}
-
 .info {
-    display: none;
-    margin: 0 auto;
-    width: max-content;
+    display: grid;
+    grid-template-columns: 50% 50px 50%;
+    grid-template-rows: 300px;
     
-    & h2 {
-        color: brown;
+    &__images {
+        display: grid;
+        grid-template-columns: auto 50px 300px 50px auto;
+        grid-template-rows: 300px;
+    }
+    &__description {
+        display: none;
+        grid-column-start: 3;
+        margin: auto 0 auto 24%;
+        width: max-content;
+        
+        & h2 {
+            color: brown;
+        }
     }
     &__item {
         text-transform: capitalize;

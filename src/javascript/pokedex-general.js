@@ -93,6 +93,7 @@ const fetchInfoNew = () => {
         return response.json();
     })
     .then(infoPokemon => {
+        console.log("infoPokemon infoPokemon",infoPokemon);
         const sprites = infoPokemon.sprites,
               images = getImages(sprites);
 
